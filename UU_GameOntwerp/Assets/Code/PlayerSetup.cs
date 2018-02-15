@@ -6,23 +6,31 @@ using UnityEngine.Networking;
 public class PlayerSetup : NetworkBehaviour {
 
     [SerializeField]
-    private Behaviour[] disableThese;
+    private Behaviour[] localOff_bhv, externOff_bhv;
+    [SerializeField]
+    private GameObject[] localOff_obj, externOff_obj;
     private Camera lobbyCam;
 
     private void Start()
     {
-        if (!isLocalPlayer)
+        if (isLocalPlayer)
         {
-            for(int i = 0; i < disableThese.Length; i++)
-            {
-                disableThese[i].enabled = false;
-            }
+            for(int i = 0; i < localOff_bhv.Length; i++)
+                localOff_bhv[i].enabled = false;
+            for (int i = 0; i < localOff_obj.Length; i++)
+                localOff_obj[i].SetActive(false);
+
+            lobbyCam = Camera.main;
+            if (lobbyCam != null)
+                lobbyCam.gameObject.SetActive(false);
         }
         else
         {
-            lobbyCam = Camera.main;
-            if(lobbyCam != null)
-                lobbyCam.gameObject.SetActive(false);
+            for (int i = 0; i < externOff_bhv.Length; i++)
+                externOff_bhv[i].enabled = false;
+            for (int i = 0; i < externOff_obj.Length; i++)
+                externOff_obj[i].SetActive(false);
+            
         }
     }
 
