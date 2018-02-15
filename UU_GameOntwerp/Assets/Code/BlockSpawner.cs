@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class BlockSpawner : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private GameObject cubeObj;
+    [SerializeField]
+    private GameObject closestSpawnPoint;
+
+
+    void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (cubeObj != null)
+            {
+                Vector3 spawnPos = closestSpawnPoint.transform.position;
+                GameObject spawned = (GameObject)Instantiate(cubeObj, spawnPos, Quaternion.identity);
+            }
+        }
 	}
 }
