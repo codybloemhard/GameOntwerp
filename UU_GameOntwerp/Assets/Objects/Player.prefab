@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114545441918489074}
   - component: {fileID: 114821727018504802}
   - component: {fileID: 114936178403913268}
+  - component: {fileID: 114039987185009942}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1340,6 +1341,17 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852847742839886}
   m_Enabled: 1
+--- !u!114 &114039987185009942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1010526790644182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8188854b27cf83948a3e490ff5370da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114079620557196146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1410,12 +1422,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463fc05c8818e944ea5860fd9f06dc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localOff_bhv: []
+  localOff_bhv:
+  - {fileID: 114039987185009942}
   externOff_bhv:
   - {fileID: 114079620557196146}
   - {fileID: 20076562072350994}
   - {fileID: 81776128143777948}
   - {fileID: 114663216080216852}
+  - {fileID: 114545441918489074}
   localOff_obj:
   - {fileID: 1443538006323410}
   - {fileID: 1948660636792426}
@@ -1503,7 +1517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.1
+  m_SendInterval: 0.06666667
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

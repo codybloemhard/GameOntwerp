@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 65078162143147794}
   - component: {fileID: 23735016923473142}
   - component: {fileID: 54891476080508294}
+  - component: {fileID: 114106549578894540}
+  - component: {fileID: 114115266087743600}
   m_Layer: 0
   m_Name: cube_block
   m_TagString: Untagged
@@ -111,3 +113,56 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114106549578894540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1160266109943534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 222
+    i1: 186
+    i2: 182
+    i3: 1
+    i4: 83
+    i5: 240
+    i6: 45
+    i7: 100
+    i8: 59
+    i9: 75
+    i10: 0
+    i11: 29
+    i12: 207
+    i13: 43
+    i14: 112
+    i15: 70
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114115266087743600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1160266109943534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

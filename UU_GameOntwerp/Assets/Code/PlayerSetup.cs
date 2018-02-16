@@ -22,17 +22,24 @@ public class PlayerSetup : NetworkBehaviour {
         lastPhase = Phase.NONE;
         body = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
-        //networking stuff
+        InitNet();
+        
         if (isLocalPlayer)
         {
-            for(int i = 0; i < localOff_bhv.Length; i++)
-                localOff_bhv[i].enabled = false;
-            for (int i = 0; i < localOff_obj.Length; i++)
-                localOff_obj[i].SetActive(false);
-
             lobbyCam = Camera.main;
             if (lobbyCam != null)
                 lobbyCam.gameObject.SetActive(false);
+        }
+    }
+    //enable and disable the correct behaviours and objects based on if were the local player
+    private void InitNet()
+    {
+        if (isLocalPlayer)
+        {
+            for (int i = 0; i < localOff_bhv.Length; i++)
+                localOff_bhv[i].enabled = false;
+            for (int i = 0; i < localOff_obj.Length; i++)
+                localOff_obj[i].SetActive(false);
         }
         else
         {
@@ -71,6 +78,7 @@ public class PlayerSetup : NetworkBehaviour {
                 flyControls.enabled = false;
                 blockSpawner.enabled = false;
             }
+            InitNet();
         }
     }
 }

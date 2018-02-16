@@ -152,6 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114980413618226730, guid: 9a786d7e745a3f14f83a6cc934b849ff,
+        type: 2}
+      propertyPath: m_NetworkAddress
+      value: localhost
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a786d7e745a3f14f83a6cc934b849ff, type: 2}
   m_IsPrefabParent: 0
