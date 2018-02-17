@@ -27,7 +27,6 @@ GameObject:
   - component: {fileID: 114545441918489074}
   - component: {fileID: 114821727018504802}
   - component: {fileID: 114936178403913268}
-  - component: {fileID: 114039987185009942}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1334,17 +1333,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852847742839886}
   m_Enabled: 1
---- !u!114 &114039987185009942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1010526790644182}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8188854b27cf83948a3e490ff5370da4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114079620557196146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1415,8 +1403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463fc05c8818e944ea5860fd9f06dc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localOff_bhv:
-  - {fileID: 114039987185009942}
+  localOff_bhv: []
   externOff_bhv:
   - {fileID: 114079620557196146}
   - {fileID: 20076562072350994}
@@ -1531,7 +1518,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1010526790644182}
-  m_Material: {fileID: 13400000, guid: 3aeb7dadc0c69d54d9e5777e9d5631f1, type: 2}
+  m_Material: {fileID: 13400000, guid: ba92fb44336020f40bdf294bb66bc9da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
