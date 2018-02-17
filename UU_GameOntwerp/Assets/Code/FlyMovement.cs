@@ -22,7 +22,7 @@ public class FlyMovement : MonoBehaviour {
             transform.position += transform.right * -speed * Time.deltaTime;
         else if (Input.GetKey("d"))
             transform.position += transform.right * speed * Time.deltaTime;
-        else if (Input.GetKey("q"))
+        if (Input.GetKey("q"))
             transform.position += transform.up * speed * Time.deltaTime;
         else if (Input.GetKey("e"))
             transform.position += transform.up * -speed * Time.deltaTime;

@@ -164,5 +164,5 @@ MonoBehaviour:
   m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
+  m_InterpolateRotation: 5
+  m_InterpolateMovement: 2

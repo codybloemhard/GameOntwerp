@@ -64,7 +64,7 @@ public class PlayerSetup : NetworkBehaviour {
             lastPhase = currentPhase;
             if (currentPhase == Phase.BUILDING)
             {
-                body.isKinematic = true;
+                body.useGravity = false;
                 collider.enabled = false;
                 physicsControls.enabled = false;
                 flyControls.enabled = true;
@@ -72,13 +72,19 @@ public class PlayerSetup : NetworkBehaviour {
             }
             else if (currentPhase == Phase.PLAYING)
             {
-                body.isKinematic = false;
+                body.useGravity = true;
                 collider.enabled = true;
                 physicsControls.enabled = true;
                 flyControls.enabled = false;
                 blockSpawner.enabled = false;
             }
             InitNet();
+        }
+        if(currentPhase == Phase.BUILDING)
+        {
+            body.velocity = Vector3.zero;
+            if (transform.position.y < 0f)
+                transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         }
     }
 }
