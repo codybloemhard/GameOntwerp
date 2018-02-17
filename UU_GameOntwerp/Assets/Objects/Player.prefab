@@ -1465,9 +1465,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeObj: {fileID: 1160266109943534, guid: debab60153f02d643b4b001dcf2b7046, type: 2}
   closestSpawnPoint: {fileID: 1140662211981660}
-  gooidir: {fileID: 0}
+  maincam: {fileID: 0}
   bullet: {fileID: 1875762547511174, guid: c575b0bca7a8da54c815ae95196e9cdb, type: 2}
-  snelheid: 30
+  snelheid: 0
 --- !u!114 &114821727018504802
 MonoBehaviour:
   m_ObjectHideFlags: 1
