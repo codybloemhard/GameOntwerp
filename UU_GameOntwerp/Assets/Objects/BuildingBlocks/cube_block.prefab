@@ -25,9 +25,10 @@ GameObject:
   - component: {fileID: 54891476080508294}
   - component: {fileID: 114106549578894540}
   - component: {fileID: 114115266087743600}
+  - component: {fileID: 114003415557695118}
   m_Layer: 0
   m_Name: cube_block
-  m_TagString: Untagged
+  m_TagString: BuildingBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +114,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114003415557695118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1160266109943534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b2ef0f1c2fc5d4c8f67d46ae291a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114106549578894540
 MonoBehaviour:
   m_ObjectHideFlags: 1

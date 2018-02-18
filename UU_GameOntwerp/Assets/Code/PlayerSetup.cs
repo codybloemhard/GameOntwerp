@@ -78,6 +78,7 @@ public class PlayerSetup : NetworkBehaviour {
                 collider.enabled = true;
                 physicsControls.enabled = true;
                 flyControls.enabled = false;
+                (blockSpawner as BlockSpawner).End();
                 blockSpawner.enabled = false;
 				shooting.enabled = true;
                 (physicsControls as RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
