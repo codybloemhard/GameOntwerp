@@ -1399,8 +1399,8 @@ MonoBehaviour:
     clampVerticalRotation: 1
     MinimumX: -45
     MaximumX: 90
-    smooth: 1
-    smoothTime: 18
+    smooth: 0
+    smoothTime: 15
     lockCursor: 1
   advancedSettings:
     groundCheckDistance: 0.1
@@ -1430,6 +1430,7 @@ MonoBehaviour:
   - {fileID: 1948660636792426}
   externOff_obj:
   - {fileID: 1663186470970946}
+  fpsCam: {fileID: 20076562072350994}
   physicsControls: {fileID: 114079620557196146}
   flyControls: {fileID: 114545441918489074}
   blockSpawner: {fileID: 114663216080216852}
@@ -1452,10 +1453,11 @@ MonoBehaviour:
     MinimumX: -90
     MaximumX: 90
     smooth: 0
-    smoothTime: 5
+    smoothTime: 15
     lockCursor: 1
   cam: {fileID: 20076562072350994}
   speed: 4
+  minimumHeight: 1
 --- !u!114 &114663216080216852
 MonoBehaviour:
   m_ObjectHideFlags: 1

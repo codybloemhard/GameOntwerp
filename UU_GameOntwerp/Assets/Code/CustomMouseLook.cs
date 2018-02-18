@@ -13,7 +13,7 @@ public class CustomMouseLook
     public bool smooth;
     public float smoothTime = 5f;
     public bool lockCursor = true;
-
+    
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
@@ -106,8 +106,3 @@ public class CustomMouseLook
         return q;
     }
 }
-/*
-public MouseLook mouseLook = new MouseLook();
-public Camera cam;
-mouseLook.Init(transform, cam.transform);
-*/

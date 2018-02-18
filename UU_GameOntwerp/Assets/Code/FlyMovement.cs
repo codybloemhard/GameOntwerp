@@ -7,6 +7,7 @@ public class FlyMovement : MonoBehaviour {
     public CustomMouseLook mouseLook = new CustomMouseLook();
     public Camera cam;
     public float speed = 4f;
+    public float minimumHeight = 1f;
 
     private void Start () {
         mouseLook.Init(transform, cam.transform);
@@ -26,6 +27,9 @@ public class FlyMovement : MonoBehaviour {
             transform.position += transform.up * speed * Time.deltaTime;
         else if (Input.GetKey("e"))
             transform.position += transform.up * -speed * Time.deltaTime;
+
+        if (transform.position.y < minimumHeight)
+            transform.position = new Vector3(transform.position.x, minimumHeight, transform.position.z);
     }
 
     private void FixedUpdate()

@@ -9,6 +9,8 @@ public class PlayerSetup : NetworkBehaviour {
     private Behaviour[] localOff_bhv, externOff_bhv;
     [SerializeField]
     private GameObject[] localOff_obj, externOff_obj;
+    [SerializeField]
+    private Camera fpsCam;
     private Camera lobbyCam;
     private Phase lastPhase;
     //components on this object
@@ -61,7 +63,6 @@ public class PlayerSetup : NetworkBehaviour {
         Phase currentPhase = Center.instance.phase;
         if (currentPhase != lastPhase)
         {
-            lastPhase = currentPhase;
             if (currentPhase == Phase.BUILDING)
             {
                 body.useGravity = false;
@@ -70,6 +71,7 @@ public class PlayerSetup : NetworkBehaviour {
                 flyControls.enabled = true;
                 blockSpawner.enabled = true;
 				shooting.enabled = false;
+                (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
             }
             else if (currentPhase == Phase.PLAYING)
             {
@@ -79,14 +81,11 @@ public class PlayerSetup : NetworkBehaviour {
                 flyControls.enabled = false;
                 blockSpawner.enabled = false;
 				shooting.enabled = true;
+                (physicsControls as UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
             }
             InitNet();
         }
         if(currentPhase == Phase.BUILDING)
-        {
             body.velocity = Vector3.zero;
-            if (transform.position.y < 0f)
-                transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-        }
     }
 }
