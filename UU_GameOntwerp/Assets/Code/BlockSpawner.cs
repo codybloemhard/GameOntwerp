@@ -24,8 +24,6 @@ public class BlockSpawner : NetworkBehaviour
             CmdSpawnCube();
         if (Input.GetMouseButtonDown(1) && isLocalPlayer)
             Fire();
-        if (Input.GetMouseButton(2) && isLocalPlayer)
-            Fire();
     }
     
     [Command]
@@ -37,7 +35,8 @@ public class BlockSpawner : NetworkBehaviour
             
             Vector3 spawnPos = closestSpawnPoint.transform.position;
             GameObject spawned = (GameObject)Instantiate(cubeObj, spawnPos, Quaternion.identity);
-                       
+            
+            
             NetworkServer.Spawn(spawned);
         }
     }
@@ -54,7 +53,7 @@ public class BlockSpawner : NetworkBehaviour
             shot.GetComponent<Rigidbody>().velocity = shot.transform.forward * snelheid;
 
             NetworkServer.Spawn(shot);
-            
+            //
         }
     }
 }
