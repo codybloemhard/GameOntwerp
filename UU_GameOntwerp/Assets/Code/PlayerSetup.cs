@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -81,7 +80,7 @@ public class PlayerSetup : NetworkBehaviour {
                 flyControls.enabled = false;
                 blockSpawner.enabled = false;
 				shooting.enabled = true;
-                (physicsControls as UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
+                (physicsControls as RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
             }
             InitNet();
         }

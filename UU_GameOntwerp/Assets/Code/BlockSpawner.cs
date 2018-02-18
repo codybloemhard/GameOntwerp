@@ -10,9 +10,7 @@ public class BlockSpawner : NetworkBehaviour
     [SerializeField]
     private GameObject closestSpawnPoint;
 
-    void Start () {
-		
-	}
+    void Start () { }
 	
 	void Update () {
         if (Input.GetMouseButtonDown(0) && isLocalPlayer)
@@ -22,11 +20,9 @@ public class BlockSpawner : NetworkBehaviour
     [Command]
     void CmdSpawnCube()
     {
-        if (cubeObj != null)
-        {
-            Vector3 spawnPos = closestSpawnPoint.transform.position;
-            GameObject spawned = (GameObject)Instantiate(cubeObj, spawnPos, Quaternion.identity);
-            NetworkServer.Spawn(spawned);
-        }
+        if (cubeObj == null) return;
+        Vector3 spawnPos = closestSpawnPoint.transform.position;
+        GameObject spawned = (GameObject)Instantiate(cubeObj, spawnPos, Quaternion.identity);
+        NetworkServer.Spawn(spawned);
     }
 }

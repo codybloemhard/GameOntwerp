@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_PhaseIndicator : MonoBehaviour {
 
     private Image image;
-    public Sprite buildImg, fightImg;
+    [SerializeField]
+    private Sprite buildImg, fightImg;
 
     private void Start () {
         image = GetComponent<Image>();

@@ -12,25 +12,21 @@ public class Shooting : NetworkBehaviour {
     [SerializeField]
     private float snelheid;
 	
-	void Start () {
-		
-	}
+	void Start () { }
 	
 	void Update () {
-		if (Input.GetMouseButtonDown(1) && isLocalPlayer)
+		if (Input.GetMouseButtonDown(0) && isLocalPlayer)
             CmdFire();
 	}
 	
 	[Command]
 	void CmdFire()
     {
-        if (bullet != null && maincam != null)
-        {
-            Vector3 spawnPos = closestSpawnPoint.transform.position;
-            Quaternion rotation = Quaternion.LookRotation(spawnPos);
-            GameObject shot = (GameObject)Instantiate(bullet, spawnPos, closestSpawnPoint.transform.rotation);
-            shot.GetComponent<Rigidbody>().velocity = shot.transform.forward * snelheid;
-            NetworkServer.Spawn(shot);
-        }
+        if (bullet == null || maincam == null) return;
+        Vector3 spawnPos = closestSpawnPoint.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(spawnPos);
+        GameObject shot = (GameObject)Instantiate(bullet, spawnPos, closestSpawnPoint.transform.rotation);
+        shot.GetComponent<Rigidbody>().velocity = shot.transform.forward * snelheid;
+        NetworkServer.Spawn(shot);
     }
 }
