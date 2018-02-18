@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114127295690140140}
   - component: {fileID: 114663216080216852}
   - component: {fileID: 114545441918489074}
+  - component: {fileID: 114032558332863876}
   - component: {fileID: 114821727018504802}
   - component: {fileID: 114936178403913268}
   m_Layer: 0
@@ -1333,6 +1334,21 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852847742839886}
   m_Enabled: 1
+--- !u!114 &114032558332863876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1010526790644182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75523283b31266439f15990d5fa4d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maincam: {fileID: 20076562072350994}
+  closestSpawnPoint: {fileID: 1140662211981660}
+  bullet: {fileID: 1593289008687858, guid: e8620a360fbe8e949b87e78157c456d6, type: 2}
+  snelheid: 20
 --- !u!114 &114079620557196146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1417,6 +1433,7 @@ MonoBehaviour:
   physicsControls: {fileID: 114079620557196146}
   flyControls: {fileID: 114545441918489074}
   blockSpawner: {fileID: 114663216080216852}
+  shooting: {fileID: 114032558332863876}
 --- !u!114 &114545441918489074
 MonoBehaviour:
   m_ObjectHideFlags: 1

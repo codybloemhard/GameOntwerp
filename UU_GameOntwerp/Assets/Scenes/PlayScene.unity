@@ -271,7 +271,7 @@ Prefab:
     - target: {fileID: 114980413618226730, guid: 9a786d7e745a3f14f83a6cc934b849ff,
         type: 2}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4621449604050546, guid: 9a786d7e745a3f14f83a6cc934b849ff, type: 2}
       propertyPath: m_LocalPosition.x
@@ -324,6 +324,12 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114980413618226730, guid: 9a786d7e745a3f14f83a6cc934b849ff,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1593289008687858, guid: e8620a360fbe8e949b87e78157c456d6,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a786d7e745a3f14f83a6cc934b849ff, type: 2}
   m_IsPrefabParent: 0
@@ -873,7 +879,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2082016616
+--- !u!1001 &1886119521
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2

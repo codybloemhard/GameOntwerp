@@ -15,7 +15,7 @@ public class PlayerSetup : NetworkBehaviour {
     private Rigidbody body;
     private CapsuleCollider collider;
     [SerializeField]
-    private Behaviour physicsControls, flyControls, blockSpawner;
+    private Behaviour physicsControls, flyControls, blockSpawner, shooting;
 
     private void Start()
     {
@@ -69,6 +69,7 @@ public class PlayerSetup : NetworkBehaviour {
                 physicsControls.enabled = false;
                 flyControls.enabled = true;
                 blockSpawner.enabled = true;
+				shooting.enabled = false;
             }
             else if (currentPhase == Phase.PLAYING)
             {
@@ -77,6 +78,7 @@ public class PlayerSetup : NetworkBehaviour {
                 physicsControls.enabled = true;
                 flyControls.enabled = false;
                 blockSpawner.enabled = false;
+				shooting.enabled = true;
             }
             InitNet();
         }
