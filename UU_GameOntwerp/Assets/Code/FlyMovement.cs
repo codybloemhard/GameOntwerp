@@ -8,9 +8,15 @@ public class FlyMovement : MonoBehaviour {
     public Camera cam;
     public float speed = 4f;
     public float minimumHeight = 1f;
+    private Vector3 lastPos;
+    private Collider[] playingFields;
 
     private void Start () {
         mouseLook.Init(transform, cam.transform);
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("PlayingField");
+        playingFields = new Collider[temp.Length];
+        for (int i = 0; i < playingFields.Length; i++)
+            playingFields[i] = temp[i].GetComponent<Collider>();
     }
 
     private void Update () {
@@ -30,6 +36,16 @@ public class FlyMovement : MonoBehaviour {
 
         if (transform.position.y < minimumHeight)
             transform.position = new Vector3(transform.position.x, minimumHeight, transform.position.z);
+        
+        bool setBack = true;
+        for(int i = 0; i < playingFields.Length; i++)
+            if(playingFields[i].bounds.Contains(transform.position))
+            {
+                setBack = false;
+                break;
+            }
+        if (!setBack) lastPos = transform.position;
+        else if(lastPos != Vector3.zero) transform.position = lastPos;
     }
 
     private void FixedUpdate()
