@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54703052968666336}
   - component: {fileID: 114358048988571342}
   - component: {fileID: 114562208712012028}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Kogel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

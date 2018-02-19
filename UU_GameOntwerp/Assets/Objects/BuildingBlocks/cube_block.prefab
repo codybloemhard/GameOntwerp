@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114106549578894540}
   - component: {fileID: 114115266087743600}
   - component: {fileID: 114003415557695118}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: cube_block
   m_TagString: BuildingBlock
   m_Icon: {fileID: 0}
