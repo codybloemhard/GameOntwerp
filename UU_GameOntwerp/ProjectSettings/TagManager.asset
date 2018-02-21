@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BuildingBlock
   - PlayingField
+  - Treasure
   layers:
   - Default
   - TransparentFX
