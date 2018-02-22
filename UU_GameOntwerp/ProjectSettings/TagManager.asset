@@ -7,6 +7,9 @@ TagManager:
   - BuildingBlock
   - PlayingField
   - Treasure
+  - Bullet
+  - TargetA
+  - TargetB
   layers:
   - Default
   - TransparentFX

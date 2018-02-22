@@ -19,10 +19,14 @@ public class Center : NetworkBehaviour {
     public Phase phase;
     [SyncVar]
     private float timer;
+    [SyncVar]
+    private int players = 0;
+    [SyncVar]
+    private int winner = -1;
     //editable vars
     [SerializeField]
     private int roundTime = 30;
-
+    
     private void Awake () {
         if (instance != null)
             Destroy(this);
@@ -53,5 +57,22 @@ public class Center : NetworkBehaviour {
     public float GetTimeLeft()
     {
         return roundTime - timer;
+    }
+
+    public int GetNewPlayer()
+    {
+        return players++;
+    }
+
+    public void SetWinner(int w)
+    {
+        CmdWinner(w);
+    }
+
+    [Command]
+    private void CmdWinner(int w)
+    {
+        winner = w;
+        Debug.Log("Winner: player" + winner);
     }
 }

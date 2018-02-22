@@ -17,6 +17,7 @@ public class PlayerSetup : NetworkBehaviour {
     private CapsuleCollider collider;
     [SerializeField]
     private Behaviour physicsControls, flyControls, blockSpawner, shooting;
+    private int playerNr = 0;
 
     private void Start()
     {
@@ -27,6 +28,14 @@ public class PlayerSetup : NetworkBehaviour {
         
         if (isLocalPlayer)
         {
+            playerNr = Center.instance.GetNewPlayer();
+            string treasure = "";
+            if (transform.position.x > 0)
+                treasure = "B";
+            else treasure = "A";
+            GameObject.FindWithTag("Target" + treasure).GetComponent<Treasure>().InitTreasure(playerNr);
+
+            GetComponent<Shooting>().SetNr(playerNr);
             lobbyCam = Camera.main;
             if (lobbyCam != null)
                 lobbyCam.gameObject.SetActive(false);
