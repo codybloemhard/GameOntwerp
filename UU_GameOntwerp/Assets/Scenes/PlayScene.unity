@@ -586,7 +586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phase: 0
-  roundTime: 20
+  roundTime: 30
+  targetA: {fileID: 1776857164}
+  targetB: {fileID: 2053149256}
 --- !u!114 &737483034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,6 +1530,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1776857164 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114295581534446538, guid: 12bfadd89cd09474689e2e5abf0027bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1783692581}
+  m_Script: {fileID: 11500000, guid: 9ccb6038e8aab5f44b47265a3afb4cf7, type: 3}
 --- !u!1001 &1783692581
 Prefab:
   m_ObjectHideFlags: 0
@@ -1680,3 +1688,9 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 761ef7d177ae26b44bffe4ba76f3b395, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &2053149256 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114295581534446538, guid: 12bfadd89cd09474689e2e5abf0027bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1252936615}
+  m_Script: {fileID: 11500000, guid: 9ccb6038e8aab5f44b47265a3afb4cf7, type: 3}

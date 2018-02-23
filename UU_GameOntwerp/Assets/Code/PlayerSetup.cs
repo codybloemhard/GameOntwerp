@@ -17,7 +17,6 @@ public class PlayerSetup : NetworkBehaviour {
     private CapsuleCollider collider;
     [SerializeField]
     private Behaviour physicsControls, flyControls, blockSpawner, shooting;
-    private int playerNr = 0;
 
     private void Start()
     {
@@ -28,19 +27,34 @@ public class PlayerSetup : NetworkBehaviour {
         
         if (isLocalPlayer)
         {
-            playerNr = Center.instance.GetNewPlayer();
-            string treasure = "";
-            if (transform.position.x > 0)
-                treasure = "B";
-            else treasure = "A";
-            GameObject.FindWithTag("Target" + treasure).GetComponent<Treasure>().InitTreasure(playerNr);
-
-            GetComponent<Shooting>().SetNr(playerNr);
+            CmdRegistrate();
             lobbyCam = Camera.main;
             if (lobbyCam != null)
                 lobbyCam.gameObject.SetActive(false);
         }
     }
+
+    [Command]
+    private void CmdRegistrate()
+    {
+        string treasure = "";
+        if (transform.position.x > 0)
+            treasure = "B";
+        else treasure = "A";
+        int nr = Center.instance.GetNewPlayer(treasure);
+        if (isClient)
+            RpcSetplayerNrOnLocal(nr);
+        else if(isLocalPlayer)
+            GetComponent<Shooting>().SetNr(nr);
+    }
+
+    [ClientRpc]
+    private void RpcSetplayerNrOnLocal(int nr)
+    {
+        if (!isLocalPlayer) return;
+        GetComponent<Shooting>().SetNr(nr);
+    }
+
     //enable and disable the correct behaviours and objects based on if were the local player
     private void InitNet()
     {

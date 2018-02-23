@@ -26,7 +26,9 @@ public class Center : NetworkBehaviour {
     //editable vars
     [SerializeField]
     private int roundTime = 30;
-    
+    [SerializeField]
+    private Treasure targetA, targetB;
+
     private void Awake () {
         if (instance != null)
             Destroy(this);
@@ -58,9 +60,12 @@ public class Center : NetworkBehaviour {
     {
         return roundTime - timer;
     }
-
-    public int GetNewPlayer()
+    
+    public int GetNewPlayer(string target)
     {
+        Debug.Log("NEW PLAYER");
+        Treasure t = target == "A" ? targetA : targetB;
+        t.InitTreasure(players);
         return players++;
     }
 
@@ -73,6 +78,13 @@ public class Center : NetworkBehaviour {
     private void CmdWinner(int w)
     {
         winner = w;
+        RpcPrintWinner();
+        Debug.Log("Winner: player" + winner);
+    }
+
+    [ClientRpc]
+    private void RpcPrintWinner()
+    {
         Debug.Log("Winner: player" + winner);
     }
 }

@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Treasure : MonoBehaviour {
 
-    private bool inited = false;
+    [SerializeField]
     private int playerOwner = -1;
 
 	public void InitTreasure(int player)
     {
-        if (inited) return;
-        inited = true;
+        if (playerOwner != -1) return;
         playerOwner = player;
     }
 
