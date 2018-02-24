@@ -106,7 +106,7 @@ public class PlayerSetup : NetworkBehaviour {
 				shooting.enabled = true;
                 (physicsControls as RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
             }
-            else if(currentPhase == Phase.PREGAME)
+            else if(currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
             {
                 body.useGravity = false;
                 collider.enabled = false;

@@ -9,14 +9,14 @@ public class UI_PhaseIndicator : MonoBehaviour {
 
     private void Start () {
         image = GetComponent<Image>();
-	}
-
+        if (image == null)
+            Debug.Log("Image is NULL in UI_PhaseIndicator");
+    }
+    
     private void Update () {
         if (image == null)
-        {
-            Debug.Log("Image is NULL in UI_PhaseIndicator");
             return;
-        }
+
         if (Center.instance.phase == Phase.NONE)
             image.sprite = null;
         else if (Center.instance.phase == Phase.BUILDING)

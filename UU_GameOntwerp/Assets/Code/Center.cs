@@ -25,10 +25,11 @@ public class Center : NetworkBehaviour {
     private int players = 0;
     [SyncVar]
     private int winner = -1;
+    [SyncVar]
+    private int roundTime = 0;
     //editable vars
     [SerializeField]
     private int buildTime = 60, playTime = -1;
-    private int roundTime = 0;
     [SerializeField]
     private Treasure targetA, targetB;
 
@@ -52,8 +53,11 @@ public class Center : NetworkBehaviour {
             phase = Phase.BUILDING;
             SetRoundTimer();
         }
-        if(roundTime == -1) timer = 0;
-        if (timer >= roundTime)
+
+        if (roundTime < 0) timer = 0;
+        else timer += Time.deltaTime;
+
+        if (timer >= roundTime && roundTime > 0)
         {
             SwitchMode();
             timer = 0f;
@@ -73,11 +77,11 @@ public class Center : NetworkBehaviour {
 
     private void SetRoundTimer()
     {
-        if (phase == Phase.NONE) roundTime = int.MaxValue;
+        if (phase == Phase.NONE) roundTime = -1;
         else if (phase == Phase.BUILDING) roundTime = buildTime;
         else if (phase == Phase.PLAYING) roundTime = playTime;
-        else if (phase == Phase.PREGAME) roundTime = -1;
-        else if (phase == Phase.POSTGAME) roundTime = -1;
+        else if (phase == Phase.PREGAME) roundTime = -2;
+        else if (phase == Phase.POSTGAME) roundTime = -3;
     }
 
     public float GetTimeLeft()
@@ -97,10 +101,17 @@ public class Center : NetworkBehaviour {
         CmdWinner(w);
     }
 
+    public int GetWinner()
+    {
+        return winner;
+    }
+
     [Command]
     private void CmdWinner(int w)
     {
         winner = w;
+        phase = Phase.POSTGAME;
+        SetRoundTimer();
         RpcPrintWinner();
         Debug.Log("Winner: player" + winner);
     }
