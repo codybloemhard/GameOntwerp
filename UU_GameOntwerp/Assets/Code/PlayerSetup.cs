@@ -106,9 +106,19 @@ public class PlayerSetup : NetworkBehaviour {
 				shooting.enabled = true;
                 (physicsControls as RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
             }
+            else if(currentPhase == Phase.PREGAME)
+            {
+                body.useGravity = false;
+                collider.enabled = false;
+                physicsControls.enabled = false;
+                flyControls.enabled = true;
+                blockSpawner.enabled = false;
+                shooting.enabled = false;
+                (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
+            }
             InitNet();
         }
-        if(currentPhase == Phase.BUILDING)
+        if(currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
             body.velocity = Vector3.zero;
     }
 }

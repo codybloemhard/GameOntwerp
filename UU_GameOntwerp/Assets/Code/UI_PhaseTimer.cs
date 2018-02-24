@@ -16,6 +16,11 @@ public class UI_PhaseTimer : MonoBehaviour {
             return;
         }
         float time = Center.instance.GetTimeLeft();
+        if(time < 0)
+        {
+            text.text = "Infinite";
+            return;
+        }
         int whole = (int)time;
         text.text = "" + whole + ":" + (int)((time - whole) * 10);
     }

@@ -6,8 +6,10 @@ using UnityEngine.Networking;
 public enum Phase
 {
     NONE,
+    PREGAME,
     BUILDING,
-    PLAYING
+    PLAYING,
+    POSTGAME
 }
 
 public class Center : NetworkBehaviour {
@@ -25,7 +27,8 @@ public class Center : NetworkBehaviour {
     private int winner = -1;
     //editable vars
     [SerializeField]
-    private int roundTime = 30;
+    private int buildTime = 60, playTime = -1;
+    private int roundTime = 0;
     [SerializeField]
     private Treasure targetA, targetB;
 
@@ -33,12 +36,23 @@ public class Center : NetworkBehaviour {
         if (instance != null)
             Destroy(this);
         else instance = this;
-        phase = Phase.BUILDING;
-	}
+        phase = Phase.PREGAME;
+        SetRoundTimer();
+    }
 	
 	private void Update () {
         if (!isServer) return;
-        timer += Time.deltaTime;
+        if (players < 2)//second player not yet connected
+        {
+            phase = Phase.PREGAME;
+            SetRoundTimer();
+        }
+        else if(phase == Phase.PREGAME)//second player connected, start game
+        {
+            phase = Phase.BUILDING;
+            SetRoundTimer();
+        }
+        if(roundTime == -1) timer = 0;
         if (timer >= roundTime)
         {
             SwitchMode();
@@ -54,6 +68,16 @@ public class Center : NetworkBehaviour {
     {
         if (phase == Phase.BUILDING) phase = Phase.PLAYING;
         else if (phase == Phase.PLAYING) phase = Phase.BUILDING;
+        SetRoundTimer();
+    }
+
+    private void SetRoundTimer()
+    {
+        if (phase == Phase.NONE) roundTime = int.MaxValue;
+        else if (phase == Phase.BUILDING) roundTime = buildTime;
+        else if (phase == Phase.PLAYING) roundTime = playTime;
+        else if (phase == Phase.PREGAME) roundTime = -1;
+        else if (phase == Phase.POSTGAME) roundTime = -1;
     }
 
     public float GetTimeLeft()
@@ -63,7 +87,6 @@ public class Center : NetworkBehaviour {
     
     public int GetNewPlayer(string target)
     {
-        Debug.Log("NEW PLAYER");
         Treasure t = target == "A" ? targetA : targetB;
         t.InitTreasure(players);
         return players++;

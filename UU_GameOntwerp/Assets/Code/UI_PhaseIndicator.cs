@@ -5,7 +5,7 @@ public class UI_PhaseIndicator : MonoBehaviour {
 
     private Image image;
     [SerializeField]
-    private Sprite buildImg, fightImg;
+    private Sprite buildImg, fightImg, preImg, postImg;
 
     private void Start () {
         image = GetComponent<Image>();
@@ -23,5 +23,9 @@ public class UI_PhaseIndicator : MonoBehaviour {
             image.sprite = buildImg;
         else if (Center.instance.phase == Phase.PLAYING)
             image.sprite = fightImg;
+        else if (Center.instance.phase == Phase.PREGAME)
+            image.sprite = preImg;
+        else if (Center.instance.phase == Phase.POSTGAME)
+            image.sprite = postImg;
     }
 }
