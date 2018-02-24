@@ -2,35 +2,35 @@
 using UnityEngine;
 
 public class Shooting : NetworkBehaviour {
-
-	[SerializeField]
-    public Camera maincam;
+    
 	[SerializeField]
     private GameObject closestSpawnPoint;
     [SerializeField]
     private GameObject bullet;
     [SerializeField]
     private float snelheid;
-	
-	void Start () {
-		
-	}
+    private int playerNr;
+
+    void Start () { }
 	
 	void Update () {
-		if (Input.GetMouseButtonDown(1) && isLocalPlayer)
-            CmdFire();
+		if (Input.GetMouseButtonDown(0) && isLocalPlayer)
+            CmdFire(closestSpawnPoint.transform.position, playerNr);
 	}
 	
 	[Command]
-	void CmdFire()
+	void CmdFire(Vector3 spawnPos, int nr)
     {
-        if (bullet != null && maincam != null)
-        {
-            Vector3 spawnPos = closestSpawnPoint.transform.position;
-            Quaternion rotation = Quaternion.LookRotation(spawnPos);
-            GameObject shot = (GameObject)Instantiate(bullet, spawnPos, closestSpawnPoint.transform.rotation);
-            shot.GetComponent<Rigidbody>().velocity = shot.transform.forward * snelheid;
-            NetworkServer.Spawn(shot);
-        }
+        if (bullet == null) return;
+        Quaternion rotation = Quaternion.LookRotation(spawnPos);
+        GameObject shot = (GameObject)Instantiate(bullet, spawnPos, closestSpawnPoint.transform.rotation);
+        shot.GetComponent<Rigidbody>().velocity = shot.transform.forward * snelheid;
+        shot.name = "bullet" + nr;
+        NetworkServer.Spawn(shot);
+    }
+
+    public void SetNr(int nr)
+    {
+        playerNr = nr;
     }
 }

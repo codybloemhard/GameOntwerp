@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BuildingBlock
+  - PlayingField
+  - Treasure
+  - Bullet
+  - TargetA
+  - TargetB
   layers:
   - Default
   - TransparentFX
@@ -13,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Players
+  - Bariers
+  - Enviroment
   - 
   - 
   - 
