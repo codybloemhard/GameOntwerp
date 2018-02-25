@@ -32,6 +32,10 @@ public class Center : NetworkBehaviour {
     private int buildTime = 60, playTime = -1;
     [SerializeField]
     private Treasure targetA, targetB;
+    [SyncVar]
+    private string nameA = "player0", nameB = "player1";
+    private int namePointer = 0;
+    private string localName = "";
 
     private void Awake () {
         if (instance != null)
@@ -40,9 +44,10 @@ public class Center : NetworkBehaviour {
         phase = Phase.PREGAME;
         SetRoundTimer();
     }
-	
-	private void Update () {
+
+    private void Update() {
         if (!isServer) return;
+        //server only part
         if (players < 2)//second player not yet connected
         {
             phase = Phase.PREGAME;
@@ -120,5 +125,29 @@ public class Center : NetworkBehaviour {
     private void RpcPrintWinner()
     {
         Debug.Log("Winner: player" + winner);
+    }
+
+    public void SetLocalName(string name)
+    {
+        localName = name;
+    }
+
+    public string GetLocalName()
+    {
+        return localName;
+    }
+    
+    public void SetName(string name)
+    {
+        if (namePointer == 0) nameA = name;
+        else if (namePointer == 1) nameB = name;
+        namePointer++;
+    }
+
+    public string GetName(int player)
+    {
+        if (player == 0) return nameA;
+        else if (player == 1) return nameB;
+        return "";
     }
 }

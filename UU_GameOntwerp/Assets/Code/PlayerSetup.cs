@@ -17,6 +17,7 @@ public class PlayerSetup : NetworkBehaviour {
     private CapsuleCollider collider;
     [SerializeField]
     private Behaviour physicsControls, flyControls, blockSpawner, shooting;
+    private string localName = "";
 
     private void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerSetup : NetworkBehaviour {
         if (isLocalPlayer)
         {
             CmdRegistrate();
+            string name = Center.instance.GetLocalName();
+            CmdSetName(name);
             lobbyCam = Camera.main;
             if (lobbyCam != null)
                 lobbyCam.gameObject.SetActive(false);
@@ -53,6 +56,12 @@ public class PlayerSetup : NetworkBehaviour {
     {
         if (!isLocalPlayer) return;
         GetComponent<Shooting>().SetNr(nr);
+    }
+    
+    [Command]
+    private void CmdSetName(string name)
+    {
+        Center.instance.SetName(name);
     }
 
     //enable and disable the correct behaviours and objects based on if were the local player

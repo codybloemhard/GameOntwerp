@@ -12,7 +12,7 @@ public class Treasure : MonoBehaviour {
         if (playerOwner != -1) return;
         playerOwner = player;
     }
-
+    
     private void OnTriggerEnter(Collider o)
     {
         if (playerOwner == -1) return;
