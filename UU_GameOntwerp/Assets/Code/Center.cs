@@ -95,7 +95,7 @@ public class Center : NetworkBehaviour {
         t.InitTreasure(players);
         return players++;
     }
-
+    
     public void SetWinner(int w)
     {
         CmdWinner(w);
