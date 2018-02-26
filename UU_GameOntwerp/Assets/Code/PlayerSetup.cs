@@ -18,6 +18,7 @@ public class PlayerSetup : NetworkBehaviour {
     [SerializeField]
     private Behaviour physicsControls, flyControls, blockSpawner, shooting;
     private string localName = "";
+    private bool isSpectator;
 
     private void Start()
     {
@@ -49,6 +50,16 @@ public class PlayerSetup : NetworkBehaviour {
             RpcSetplayerNrOnLocal(nr);
         else if(isLocalPlayer)
             GetComponent<Shooting>().SetNr(nr);
+        if (nr > 1) isSpectator = true;
+        else isSpectator = false;
+        RpcSetSpectator(isSpectator);//dont need to check for isClient: host is first player and never spectator!
+    }
+
+    [ClientRpc]
+    private void RpcSetSpectator(bool spec)
+    {
+        isSpectator = spec;
+        GetComponent<FlyMovement>().SetSpectator(spec);
     }
 
     [ClientRpc]
@@ -94,7 +105,17 @@ public class PlayerSetup : NetworkBehaviour {
         Phase currentPhase = Center.instance.phase;
         if (currentPhase != lastPhase)
         {
-            if (currentPhase == Phase.BUILDING)
+            if (isSpectator || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
+            {
+                body.useGravity = false;
+                collider.enabled = false;
+                physicsControls.enabled = false;
+                flyControls.enabled = true;
+                blockSpawner.enabled = false;
+                shooting.enabled = false;
+                (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
+            }
+            else if (currentPhase == Phase.BUILDING)
             {
                 body.useGravity = false;
                 collider.enabled = false;
@@ -115,19 +136,9 @@ public class PlayerSetup : NetworkBehaviour {
 				shooting.enabled = true;
                 (physicsControls as RigidbodyFirstPersonController).mouseLook.Init(transform, fpsCam.transform);
             }
-            else if(currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
-            {
-                body.useGravity = false;
-                collider.enabled = false;
-                physicsControls.enabled = false;
-                flyControls.enabled = true;
-                blockSpawner.enabled = false;
-                shooting.enabled = false;
-                (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
-            }
             InitNet();
         }
-        if(currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
+        if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
             body.velocity = Vector3.zero;
     }
 }

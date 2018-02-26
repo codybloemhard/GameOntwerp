@@ -96,8 +96,11 @@ public class Center : NetworkBehaviour {
     
     public int GetNewPlayer(string target)
     {
-        Treasure t = target == "A" ? targetA : targetB;
-        t.InitTreasure(players);
+        if (players < 2)
+        {
+            Treasure t = target == "A" ? targetA : targetB;
+            t.InitTreasure(players);
+        }
         return players++;
     }
     

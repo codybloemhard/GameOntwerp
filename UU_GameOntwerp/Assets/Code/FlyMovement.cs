@@ -10,6 +10,7 @@ public class FlyMovement : MonoBehaviour {
     public float minimumHeight = 1f;
     private Vector3 lastPos;
     private Collider[] playingFields;
+    private bool isSpectator;
 
     private void Start () {
         mouseLook.Init(transform, cam.transform);
@@ -36,20 +37,30 @@ public class FlyMovement : MonoBehaviour {
 
         if (transform.position.y < minimumHeight)
             transform.position = new Vector3(transform.position.x, minimumHeight, transform.position.z);
-        
+
+        if (!isSpectator) ConstrainToArea();
+    }
+
+    private void ConstrainToArea()
+    {
         bool setBack = true;
-        for(int i = 0; i < playingFields.Length; i++)
-            if(playingFields[i].bounds.Contains(transform.position))
+        for (int i = 0; i < playingFields.Length; i++)
+            if (playingFields[i].bounds.Contains(transform.position))
             {
                 setBack = false;
                 break;
             }
         if (!setBack) lastPos = transform.position;
-        else if(lastPos != Vector3.zero) transform.position = lastPos;
+        else if (lastPos != Vector3.zero) transform.position = lastPos;
     }
 
     private void FixedUpdate()
     {
         mouseLook.UpdateCursorLock();
+    }
+
+    public void SetSpectator(bool spec)
+    {
+        isSpectator = spec;
     }
 }
