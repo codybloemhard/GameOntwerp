@@ -17,11 +17,14 @@ public class MenuEnable : MonoBehaviour {
         {
             lanMenu.active = true;
             gameUI.active = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
             lanMenu.active = false;
             gameUI.active = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

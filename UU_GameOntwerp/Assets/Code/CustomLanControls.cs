@@ -21,10 +21,19 @@ public class CustomLanControls : MonoBehaviour
 		manager = GetComponent<NetworkManager>();
 	}
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
+            QuitConnection();
+    }
+
     public void QuitConnection()
     {
         if (NetworkServer.active || NetworkClient.active)
+        {
             manager.StopHost();
+            Center.instance.Reset();
+        }
     }
     
     public void StartHost()

@@ -15,7 +15,7 @@ public class UI_Winner : MonoBehaviour {
     private void Update () {
         if (text == null) return;
         int winner = Center.instance.GetWinner();
-        if (winner == -1) return;
-        text.text = "Winner: " + Center.instance.GetName(winner) + " !";
+        if (winner == -1) text.text = "";
+        else text.text = "Winner: " + Center.instance.GetName(winner) + " !";
 	}
 }

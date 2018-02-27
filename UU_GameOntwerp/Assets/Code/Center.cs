@@ -36,7 +36,7 @@ public class Center : NetworkBehaviour {
     private string nameA = "player0", nameB = "player1";
     private int namePointer = 0;
     private string localName = "";
-
+    
     private void Awake () {
         if (instance != null)
             Destroy(this);
@@ -58,7 +58,7 @@ public class Center : NetworkBehaviour {
             phase = Phase.BUILDING;
             SetRoundTimer();
         }
-
+        
         if (roundTime < 0) timer = 0;
         else timer += Time.deltaTime;
 
@@ -72,6 +72,18 @@ public class Center : NetworkBehaviour {
             timer = 0f;
         }
 	}
+
+    public void Reset()
+    {
+        phase = Phase.PREGAME;
+        SetRoundTimer();
+        timer = 0f;
+        players = 0;
+        winner = -1;
+        nameA = "player0";
+        nameB = "player1";
+        namePointer = 0;
+    }
 
     private void SwitchMode()
     {

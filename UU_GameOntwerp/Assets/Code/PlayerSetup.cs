@@ -138,6 +138,7 @@ public class PlayerSetup : NetworkBehaviour {
             }
             InitNet();
         }
+
         if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
             body.velocity = Vector3.zero;
     }
