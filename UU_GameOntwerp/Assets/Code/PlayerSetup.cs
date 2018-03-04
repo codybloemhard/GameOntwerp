@@ -102,10 +102,10 @@ public class PlayerSetup : NetworkBehaviour {
 
     private void Update()
     {
-        Phase currentPhase = Center.instance.phase;
+        Phase currentPhase = Center.instance.GetPhase();
         if (currentPhase != lastPhase)
         {
-            if (isSpectator || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
+            if (isSpectator || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME || currentPhase == Phase.POSTROUND)
             {
                 body.useGravity = false;
                 collider.enabled = false;
@@ -139,7 +139,8 @@ public class PlayerSetup : NetworkBehaviour {
             InitNet();
         }
 
-        if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME)
+        if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME 
+            || currentPhase == Phase.POSTROUND)
             body.velocity = Vector3.zero;
     }
 }

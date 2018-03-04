@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phase: 0
-  buildTime: 10
+  buildTime: 60
   playTime: -1
   targetA: {fileID: 1776857164}
   targetB: {fileID: 2053149256}

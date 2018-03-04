@@ -17,15 +17,17 @@ public class UI_PhaseIndicator : MonoBehaviour {
         if (image == null)
             return;
 
-        if (Center.instance.phase == Phase.NONE)
+        if (Center.instance.GetPhase() == Phase.NONE)
             image.sprite = null;
-        else if (Center.instance.phase == Phase.BUILDING)
+        else if (Center.instance.GetPhase() == Phase.BUILDING)
             image.sprite = buildImg;
-        else if (Center.instance.phase == Phase.PLAYING)
+        else if (Center.instance.GetPhase() == Phase.PLAYING)
             image.sprite = fightImg;
-        else if (Center.instance.phase == Phase.PREGAME)
+        else if (Center.instance.GetPhase() == Phase.PREGAME)
             image.sprite = preImg;
-        else if (Center.instance.phase == Phase.POSTGAME)
+        else if (Center.instance.GetPhase() == Phase.POSTGAME)
+            image.sprite = postImg;
+        else if (Center.instance.GetPhase() == Phase.POSTROUND)
             image.sprite = postImg;
     }
 }

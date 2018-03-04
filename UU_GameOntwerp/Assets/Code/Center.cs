@@ -9,7 +9,8 @@ public enum Phase
     PREGAME,
     BUILDING,
     PLAYING,
-    POSTGAME
+    POSTGAME,
+    POSTROUND
 }
 
 public class Center : NetworkBehaviour {
@@ -18,18 +19,20 @@ public class Center : NetworkBehaviour {
     //all networked vars
     [SerializeField]
     [SyncVar]
-    public Phase phase;
+    private Phase phase;
     [SyncVar]
     private float timer;
     [SyncVar]
     private int players = 0;
     [SyncVar]
-    private int winner = -1;
+    private int winner = -1, player0Wins = 0, player1Wins  = 0, gameWinner = -1;
     [SyncVar]
     private int roundTime = 0;
+    [SyncVar]
+    private int roundNr = 0;
     //editable vars
     [SerializeField]
-    private int buildTime = 60, playTime = -1;
+    private int buildTime = 60, playTime = -1, postRoundTime = 5;
     [SerializeField]
     private Treasure targetA, targetB;
     [SyncVar]
@@ -80,16 +83,35 @@ public class Center : NetworkBehaviour {
         timer = 0f;
         players = 0;
         winner = -1;
+        player0Wins = 0;
+        player1Wins = 0;
+        gameWinner = -1;
         nameA = "player0";
         nameB = "player1";
         namePointer = 0;
+        roundNr = 0;
     }
 
     private void SwitchMode()
     {
         if (phase == Phase.BUILDING) phase = Phase.PLAYING;
         else if (phase == Phase.PLAYING) phase = Phase.BUILDING;
+        else if (phase == Phase.POSTROUND)
+        {
+            phase = Phase.PLAYING;
+            winner = -1;
+            roundNr++;
+            DeleteBullets();
+        }
         SetRoundTimer();
+    }
+
+    private void DeleteBullets()
+    {
+        GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
+        if (allBullets == null) return;
+        for (int i = 0; i < allBullets.Length; i++)
+            Destroy(allBullets[i]);
     }
 
     private void SetRoundTimer()
@@ -99,6 +121,12 @@ public class Center : NetworkBehaviour {
         else if (phase == Phase.PLAYING) roundTime = playTime;
         else if (phase == Phase.PREGAME) roundTime = -2;
         else if (phase == Phase.POSTGAME) roundTime = -3;
+        else if (phase == Phase.POSTROUND) roundTime = postRoundTime;
+    }
+    
+    public Phase GetPhase()
+    {
+        return phase;
     }
 
     public float GetTimeLeft()
@@ -126,20 +154,26 @@ public class Center : NetworkBehaviour {
         return winner;
     }
 
+    public int GetGameWinner()
+    {
+        return gameWinner;
+    }
+
+    public int GetRoundNr()
+    {
+        return roundNr;
+    }
+
     [Command]
     private void CmdWinner(int w)
     {
         winner = w;
-        phase = Phase.POSTGAME;
+        if (winner == 0) player0Wins++;
+        else if (winner == 1) player1Wins++;
+        gameWinner = player0Wins > player1Wins ? 0 : 1;
+        if (player0Wins >= 2 || player1Wins >= 2) phase = Phase.POSTGAME;
+        else phase = Phase.POSTROUND;
         SetRoundTimer();
-        RpcPrintWinner();
-        Debug.Log("Winner: player" + winner);
-    }
-
-    [ClientRpc]
-    private void RpcPrintWinner()
-    {
-        Debug.Log("Winner: player" + winner);
     }
 
     public void SetLocalName(string name)
