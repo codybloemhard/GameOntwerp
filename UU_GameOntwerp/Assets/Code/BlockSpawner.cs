@@ -24,7 +24,8 @@ public class BlockSpawner : NetworkBehaviour
             Physics.Raycast(closestSpawnPoint.transform.position, cam.transform.forward, out hit);
             if (hit.collider != null)
             {
-                if (hit.distance < grapDistance && hit.collider.tag == "BuildingBlock")
+                if (hit.distance < grapDistance && hit.collider.tag == "BuildingBlock"
+                    || hit.collider.tag == "TargetA" || hit.collider.tag == "TargetB")
                 {
                     caught = hit.collider.gameObject;
                 }
