@@ -1489,10 +1489,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 20076562072350994}
-  cubeObj: {fileID: 1160266109943534, guid: debab60153f02d643b4b001dcf2b7046, type: 2}
   closestSpawnPoint: {fileID: 1140662211981660}
   grapDistance: 5
   pullPower: 0.2
+  blocks:
+  - {fileID: 1160266109943534, guid: debab60153f02d643b4b001dcf2b7046, type: 2}
+  - {fileID: 1996550124216066, guid: 09f0ffea90762594788bfbdb159fe918, type: 2}
 --- !u!114 &114821727018504802
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,7 +21,8 @@ public class FlyMovement : MonoBehaviour {
     }
 
     private void Update () {
-        mouseLook.LookRotation(gameObject.transform, cam.transform);
+        if (!Center.instance.inventoryOpen)
+            mouseLook.LookRotation(gameObject.transform, cam.transform);
         if (Input.GetKey("w"))
             transform.position += transform.forward * speed * Time.deltaTime;
         else if(Input.GetKey("s"))
@@ -56,6 +57,8 @@ public class FlyMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if (Center.instance.inventoryOpen) mouseLook.SetCursorLock(false);
+        else mouseLook.SetCursorLock(true);
         mouseLook.UpdateCursorLock();
     }
 

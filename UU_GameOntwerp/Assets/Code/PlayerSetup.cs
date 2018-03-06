@@ -99,7 +99,7 @@ public class PlayerSetup : NetworkBehaviour {
         if (lobbyCam != null)
             lobbyCam.gameObject.SetActive(true);
     }
-
+    
     private void Update()
     {
         Phase currentPhase = Center.instance.GetPhase();
