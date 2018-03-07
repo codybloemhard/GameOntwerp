@@ -41,6 +41,9 @@ public class Center : NetworkBehaviour {
     private string localName = "";
     public bool inventoryOpen = false;
     public int toBeSpawned = -1;
+    public bool needHelp = true;
+    [SerializeField]
+    public Inventory inv;
     
     private void Awake () {
         if (instance != null)
@@ -92,6 +95,8 @@ public class Center : NetworkBehaviour {
         nameB = "player1";
         namePointer = 0;
         roundNr = 0;
+        needHelp = true;
+        inv.Reset();
     }
 
     private void SwitchMode()

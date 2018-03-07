@@ -51,6 +51,7 @@ public class BlockSpawner : NetworkBehaviour
     [Command]
     private void CmdSpawnCube(int o)
     {
+        if (o < 0 || o > blocks.Length - 1) return;
         Vector3 spawnPos = closestSpawnPoint.transform.position;
         GameObject spawned = (GameObject)Instantiate(blocks[o], spawnPos, Quaternion.identity);
         NetworkServer.Spawn(spawned);

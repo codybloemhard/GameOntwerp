@@ -5,6 +5,7 @@ public class Inventory : MonoBehaviour {
 
     [SerializeField]
     private int[] amounts;
+    private int[] am;
     [SerializeField]
     private Sprite[] images;
     [SerializeField]
@@ -14,11 +15,17 @@ public class Inventory : MonoBehaviour {
 
     private int index;
 
-    private void Update () {
-        indicator.sprite = images[index];
-        amountText.text = "Items left: " + amounts[index];
+    private void Start()
+    {
+        am = new int[amounts.Length];
+        Reset();
     }
 
+    private void Update () {
+        indicator.sprite = images[index];
+        amountText.text = "Items left: " + am[index];
+    }
+    
     public void DecreaseIndex()
     {
         index--;
@@ -35,8 +42,14 @@ public class Inventory : MonoBehaviour {
 
     public void SpawnCurrent()
     {
-        if (amounts[index] <= 0) return;
+        if (am[index] <= 0) return;
         Center.instance.toBeSpawned = index;
-        amounts[index]--;
+        am[index]--;
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < amounts.Length; i++)
+            am[i] = amounts[i];
     }
 }

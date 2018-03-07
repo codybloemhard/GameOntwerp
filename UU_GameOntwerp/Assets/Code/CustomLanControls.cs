@@ -26,7 +26,7 @@ public class CustomLanControls : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
             QuitConnection();
     }
-
+    
     public void QuitConnection()
     {
         if (NetworkServer.active || NetworkClient.active)
