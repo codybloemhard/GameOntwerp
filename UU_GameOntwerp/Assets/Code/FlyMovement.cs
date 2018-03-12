@@ -21,8 +21,7 @@ public class FlyMovement : MonoBehaviour {
     }
 
     private void Update () {
-        if (!Center.instance.inventoryOpen)
-            mouseLook.LookRotation(gameObject.transform, cam.transform);
+        mouseLook.LookRotation(gameObject.transform, cam.transform);
         if (Input.GetKey("w"))
             transform.position += transform.forward * speed * Time.deltaTime;
         else if(Input.GetKey("s"))
@@ -38,7 +37,7 @@ public class FlyMovement : MonoBehaviour {
 
         if (transform.position.y < minimumHeight)
             transform.position = new Vector3(transform.position.x, minimumHeight, transform.position.z);
-
+        
         if (!isSpectator) ConstrainToArea();
     }
 
@@ -57,8 +56,7 @@ public class FlyMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (Center.instance.inventoryOpen) mouseLook.SetCursorLock(false);
-        else mouseLook.SetCursorLock(true);
+        mouseLook.SetCursorLock(true);
         mouseLook.UpdateCursorLock();
     }
 

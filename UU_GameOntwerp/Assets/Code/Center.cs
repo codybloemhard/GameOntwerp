@@ -39,7 +39,7 @@ public class Center : NetworkBehaviour {
     private string nameA = "player0", nameB = "player1";
     private int namePointer = 0;
     private string localName = "";
-    public bool inventoryOpen = false;
+    //public bool inventoryOpen = false;
     public int toBeSpawned = -1;
     public bool needHelp = true;
     [SerializeField]

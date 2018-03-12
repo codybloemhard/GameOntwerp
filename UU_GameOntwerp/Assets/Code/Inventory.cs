@@ -24,6 +24,12 @@ public class Inventory : MonoBehaviour {
     private void Update () {
         indicator.sprite = images[index];
         amountText.text = "Items left: " + am[index];
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            DecreaseIndex();
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            IncreaseIndex();
+        if (Input.GetMouseButtonDown(1))
+            SpawnCurrent();
     }
     
     public void DecreaseIndex()
