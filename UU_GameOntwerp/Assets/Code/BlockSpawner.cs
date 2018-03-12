@@ -8,11 +8,11 @@ public class BlockSpawner : NetworkBehaviour
     [SerializeField]
     private Camera cam;
     [SerializeField]
-    private GameObject cubeObj;
-    [SerializeField]
     private GameObject closestSpawnPoint;
     [SerializeField]
     private float grapDistance = 5f, pullPower = 0.5f;
+    [SerializeField]
+    GameObject[] blocks;
     private GameObject caught;
 
     void Start () { }
@@ -24,7 +24,8 @@ public class BlockSpawner : NetworkBehaviour
             Physics.Raycast(closestSpawnPoint.transform.position, cam.transform.forward, out hit);
             if (hit.collider != null)
             {
-                if (hit.distance < grapDistance && hit.collider.tag == "BuildingBlock")
+                if (hit.distance < grapDistance && hit.collider.tag == "BuildingBlock"
+                    || hit.collider.tag == "TargetA" || hit.collider.tag == "TargetB")
                 {
                     caught = hit.collider.gameObject;
                 }
@@ -34,8 +35,12 @@ public class BlockSpawner : NetworkBehaviour
             caught = null;
         if (caught != null)
             CmdPullObject(caught);
-        if (Input.GetMouseButtonDown(1) && isLocalPlayer && caught == null)
-            CmdSpawnCube();
+        
+        if(isLocalPlayer && Center.instance.toBeSpawned != -1)
+        {
+            CmdSpawnCube(Center.instance.toBeSpawned);
+            Center.instance.toBeSpawned = -1;
+        }
 	}
 
     public void End()
@@ -44,11 +49,11 @@ public class BlockSpawner : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnCube()
+    private void CmdSpawnCube(int o)
     {
-        if (cubeObj == null) return;
+        if (o < 0 || o > blocks.Length - 1) return;
         Vector3 spawnPos = closestSpawnPoint.transform.position;
-        GameObject spawned = (GameObject)Instantiate(cubeObj, spawnPos, Quaternion.identity);
+        GameObject spawned = (GameObject)Instantiate(blocks[o], spawnPos, Quaternion.identity);
         NetworkServer.Spawn(spawned);
     }
     [Command]
