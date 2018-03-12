@@ -10,6 +10,8 @@ public class Dragable : NetworkBehaviour
     [SyncVar]
     private float dragged;
     private Rigidbody body;
+    private Vector3 _pos;
+    private Quaternion _rot;
 
     public void Start()
     {
@@ -34,5 +36,17 @@ public class Dragable : NetworkBehaviour
         this.pos = pos;
         body.useGravity = false;
         transform.position = pos;
+    }
+
+    public void SaveState()
+    {
+        _pos = transform.position;
+        _rot = transform.rotation;
+    }
+
+    public void ResetState()
+    {
+        transform.position = _pos;
+        transform.rotation = _rot;
     }
 }

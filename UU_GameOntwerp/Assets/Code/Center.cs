@@ -39,16 +39,17 @@ public class Center : NetworkBehaviour {
     private string nameA = "player0", nameB = "player1";
     private int namePointer = 0;
     private string localName = "";
-    //public bool inventoryOpen = false;
     public int toBeSpawned = -1;
     public bool needHelp = true;
     [SerializeField]
     public Inventory inv;
+    private List<Dragable> blocks;
     
     private void Awake () {
         if (instance != null)
             Destroy(this);
         else instance = this;
+        blocks = new List<Dragable>();
         phase = Phase.PREGAME;
         SetRoundTimer();
     }
@@ -97,11 +98,16 @@ public class Center : NetworkBehaviour {
         roundNr = 0;
         needHelp = true;
         inv.Reset();
+        blocks.Clear();
     }
 
     private void SwitchMode()
     {
-        if (phase == Phase.BUILDING) phase = Phase.PLAYING;
+        if (phase == Phase.BUILDING)
+        {
+            phase = Phase.PLAYING;
+            SaveBlocks();
+        }
         else if (phase == Phase.PLAYING) phase = Phase.BUILDING;
         else if (phase == Phase.POSTROUND)
         {
@@ -109,6 +115,7 @@ public class Center : NetworkBehaviour {
             winner = -1;
             roundNr++;
             DeleteBullets();
+            RebuildBlocks();
         }
         SetRoundTimer();
     }
@@ -119,6 +126,30 @@ public class Center : NetworkBehaviour {
         if (allBullets == null) return;
         for (int i = 0; i < allBullets.Length; i++)
             Destroy(allBullets[i]);
+    }
+
+    private void SaveBlocks()
+    {
+        blocks.Clear();
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("BuildingBlock");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            Dragable d = objects[i].GetComponent<Dragable>();
+            d.SaveState();
+            blocks.Add(d);
+        }
+        Dragable t0 = targetA.gameObject.GetComponent<Dragable>();
+        Dragable t1 = targetB.gameObject.GetComponent<Dragable>();
+        t0.SaveState();
+        t1.SaveState();
+        blocks.Add(t0);
+        blocks.Add(t1);
+    }
+
+    private void RebuildBlocks()
+    {
+        for (int i = 0; i < blocks.Count; i++)
+            blocks[i].ResetState();
     }
 
     private void SetRoundTimer()
