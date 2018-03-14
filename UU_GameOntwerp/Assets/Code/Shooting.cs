@@ -9,13 +9,22 @@ public class Shooting : NetworkBehaviour {
     private GameObject bullet;
     [SerializeField]
     private float snelheid;
+    [SerializeField]
+    private float waitTime;
     private int playerNr;
+    private float time;
 
     void Start () { }
 	
 	void Update () {
-		if (Input.GetMouseButtonDown(0) && isLocalPlayer)
+        if (!isLocalPlayer) return;
+        time += Time.deltaTime;
+        Center.instance.shootPercentage = time / waitTime;
+        if (Input.GetMouseButtonDown(0) && time >= waitTime)
+        {
+            time = 0f;
             CmdFire(closestSpawnPoint.transform.position, playerNr);
+        }
 	}
 	
 	[Command]

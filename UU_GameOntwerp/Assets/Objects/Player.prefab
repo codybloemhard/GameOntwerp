@@ -1349,6 +1349,7 @@ MonoBehaviour:
   closestSpawnPoint: {fileID: 1140662211981660}
   bullet: {fileID: 1593289008687858, guid: e8620a360fbe8e949b87e78157c456d6, type: 2}
   snelheid: 30
+  waitTime: 2
 --- !u!114 &114079620557196146
 MonoBehaviour:
   m_ObjectHideFlags: 1

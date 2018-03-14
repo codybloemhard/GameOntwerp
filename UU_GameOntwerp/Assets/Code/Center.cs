@@ -45,6 +45,7 @@ public class Center : NetworkBehaviour {
     public Inventory inv;
     private List<Dragable> blocks;
     private float dmgA = 0f, dmgB = 0f;
+    public float shootPercentage;
     
     private void Awake () {
         if (instance != null)
