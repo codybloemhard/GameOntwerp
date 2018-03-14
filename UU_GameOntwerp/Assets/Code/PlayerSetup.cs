@@ -48,8 +48,11 @@ public class PlayerSetup : NetworkBehaviour {
         int nr = Center.instance.GetNewPlayer(treasure);
         if (isClient)
             RpcSetplayerNrOnLocal(nr);
-        else if(isLocalPlayer)
+        else if (isLocalPlayer)
+        {
             GetComponent<Shooting>().SetNr(nr);
+            GetComponent<BlockSpawner>().SetNr(nr);
+        }
         if (nr > 1) isSpectator = true;
         else isSpectator = false;
         RpcSetSpectator(isSpectator);//dont need to check for isClient: host is first player and never spectator!
@@ -67,6 +70,7 @@ public class PlayerSetup : NetworkBehaviour {
     {
         if (!isLocalPlayer) return;
         GetComponent<Shooting>().SetNr(nr);
+        GetComponent<BlockSpawner>().SetNr(nr);
     }
     
     [Command]

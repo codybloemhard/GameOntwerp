@@ -12,6 +12,7 @@ public class Dragable : NetworkBehaviour
     private Rigidbody body;
     private Vector3 _pos;
     private Quaternion _rot;
+    private int fromPlayer;
 
     public void Start()
     {
@@ -48,5 +49,18 @@ public class Dragable : NetworkBehaviour
     {
         transform.position = _pos;
         transform.rotation = _rot;
+    }
+
+    public void SetPlayer(int nr)
+    {
+        fromPlayer = nr;
+    }
+
+    public Vector2 GetDamage()
+    {
+        Vector2 result = new Vector2();
+        result.x = body.mass * (transform.position - _pos).magnitude;
+        result.y = fromPlayer;
+        return result;
     }
 }

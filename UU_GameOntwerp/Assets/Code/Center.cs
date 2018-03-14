@@ -44,6 +44,7 @@ public class Center : NetworkBehaviour {
     [SerializeField]
     public Inventory inv;
     private List<Dragable> blocks;
+    private float dmgA = 0f, dmgB = 0f;
     
     private void Awake () {
         if (instance != null)
@@ -99,6 +100,8 @@ public class Center : NetworkBehaviour {
         needHelp = true;
         inv.Reset();
         blocks.Clear();
+        dmgA = 0f;
+        dmgB = 0f;
     }
 
     private void SwitchMode()
@@ -108,7 +111,16 @@ public class Center : NetworkBehaviour {
             phase = Phase.PLAYING;
             SaveBlocks();
         }
-        else if (phase == Phase.PLAYING) phase = Phase.BUILDING;
+        else if (phase == Phase.PLAYING)
+        {
+            SetDamage();
+            winner = dmgA > dmgB ? 1 : 0;
+            if (winner == 0) player0Wins++;
+            else if (winner == 1) player1Wins++;
+            gameWinner = player0Wins > player1Wins ? 0 : 1;
+            if (player0Wins >= 2 || player1Wins >= 2) phase = Phase.POSTGAME;
+            else phase = Phase.POSTROUND;
+        }
         else if (phase == Phase.POSTROUND)
         {
             phase = Phase.PLAYING;
@@ -119,7 +131,17 @@ public class Center : NetworkBehaviour {
         }
         SetRoundTimer();
     }
-    
+
+    private void SetRoundTimer()
+    {
+        if (phase == Phase.NONE) roundTime = -1;
+        else if (phase == Phase.BUILDING) roundTime = buildTime;
+        else if (phase == Phase.PLAYING) roundTime = playTime;
+        else if (phase == Phase.PREGAME) roundTime = -2;
+        else if (phase == Phase.POSTGAME) roundTime = -3;
+        else if (phase == Phase.POSTROUND) roundTime = postRoundTime;
+    }
+
     private void DeleteBullets()
     {
         GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
@@ -146,20 +168,21 @@ public class Center : NetworkBehaviour {
         blocks.Add(t1);
     }
 
+    private void SetDamage()
+    {
+        dmgA = 0f;
+        dmgB = 0f;
+        for (int i = 0; i < blocks.Count; i++) {
+            Vector2 res = blocks[i].GetDamage();
+            if (res.y == 0) dmgA += res.x;
+            else if (res.y == 1) dmgB += res.x;
+        }
+    }
+
     private void RebuildBlocks()
     {
         for (int i = 0; i < blocks.Count; i++)
             blocks[i].ResetState();
-    }
-
-    private void SetRoundTimer()
-    {
-        if (phase == Phase.NONE) roundTime = -1;
-        else if (phase == Phase.BUILDING) roundTime = buildTime;
-        else if (phase == Phase.PLAYING) roundTime = playTime;
-        else if (phase == Phase.PREGAME) roundTime = -2;
-        else if (phase == Phase.POSTGAME) roundTime = -3;
-        else if (phase == Phase.POSTROUND) roundTime = postRoundTime;
     }
     
     public Phase GetPhase()

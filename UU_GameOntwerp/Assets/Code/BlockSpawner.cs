@@ -14,6 +14,7 @@ public class BlockSpawner : NetworkBehaviour
     [SerializeField]
     GameObject[] blocks;
     private GameObject caught;
+    private int playerNr;
 
     void Start () { }
 	
@@ -38,7 +39,7 @@ public class BlockSpawner : NetworkBehaviour
         
         if(isLocalPlayer && Center.instance.toBeSpawned != -1)
         {
-            CmdSpawnCube(Center.instance.toBeSpawned);
+            CmdSpawnCube(Center.instance.toBeSpawned, playerNr);
             Center.instance.toBeSpawned = -1;
         }
 	}
@@ -48,12 +49,19 @@ public class BlockSpawner : NetworkBehaviour
         if (caught == null) return;
     }
 
+    public void SetNr(int nr)
+    {
+        playerNr = nr;
+    }
+    
     [Command]
-    private void CmdSpawnCube(int o)
+    private void CmdSpawnCube(int o, int nr)
     {
         if (o < 0 || o > blocks.Length - 1) return;
         Vector3 spawnPos = closestSpawnPoint.transform.position;
         GameObject spawned = (GameObject)Instantiate(blocks[o], spawnPos, Quaternion.identity);
+        spawned.GetComponent<Dragable>().SetPlayer(nr);
+        spawned.name = "block" + nr;
         NetworkServer.Spawn(spawned);
     }
     [Command]
