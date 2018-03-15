@@ -5,7 +5,7 @@ using UnityEngine;
 public class MenuEnable : MonoBehaviour {
 
     [SerializeField]
-    private GameObject lanMenu, gameUI, inventoryUI;
+    private GameObject lanMenu, gameUI, buildInventoryUI, upgradeInventory;
 
     private void Start () { }
     
@@ -15,7 +15,8 @@ public class MenuEnable : MonoBehaviour {
         {
             lanMenu.active = true;
             gameUI.active = false;
-            inventoryUI.active = false;
+            buildInventoryUI.active = false;
+            upgradeInventory.active = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -23,18 +24,24 @@ public class MenuEnable : MonoBehaviour {
         {
             lanMenu.active = false;
             gameUI.active = true;
-            bool buildPhase = Center.instance.GetPhase() == Phase.BUILDING;
+            Phase phase = Center.instance.GetPhase();
+            Cursor.lockState = CursorLockMode.Locked;
 
-            if(buildPhase)
+            if (phase == Phase.BUILDING)
             {
-                inventoryUI.active = true;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                buildInventoryUI.active = true;
+                upgradeInventory.active = false;
+                
+            }
+            else if(phase == Phase.UPGRADE)
+            {
+                buildInventoryUI.active = false;
+                upgradeInventory.active = true;
             }
             else
             {
-                inventoryUI.active = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                buildInventoryUI.active = false;
+                upgradeInventory.active = false;      
             }
         }
     }

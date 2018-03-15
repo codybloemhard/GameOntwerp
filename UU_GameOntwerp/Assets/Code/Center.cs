@@ -9,6 +9,7 @@ public enum Phase
     PREGAME,
     BUILDING,
     PLAYING,
+    UPGRADE,
     POSTGAME,
     POSTROUND
 }
@@ -32,7 +33,7 @@ public class Center : NetworkBehaviour {
     private int roundNr = 0;
     //editable vars
     [SerializeField]
-    private int buildTime = 60, playTime = -1, postRoundTime = 5;
+    private int buildTime = 60, playTime = -1, postRoundTime = 5, upgradeTime = 60;
     [SerializeField]
     private Treasure targetA, targetB;
     [SyncVar]
@@ -42,11 +43,13 @@ public class Center : NetworkBehaviour {
     public int toBeSpawned = -1;
     public bool needHelp = true;
     [SerializeField]
-    public Inventory inv;
+    public BuildInventory inv;
     private List<Dragable> blocks;
     private float dmgA = 0f, dmgB = 0f;
     public float shootPercentage;
-    
+    public int money = 100;
+    public float dmgMultiplier = 1f;
+
     private void Awake () {
         if (instance != null)
             Destroy(this);
@@ -103,6 +106,8 @@ public class Center : NetworkBehaviour {
         blocks.Clear();
         dmgA = 0f;
         dmgB = 0f;
+        money = 100;
+        dmgMultiplier = 1f;
     }
 
     private void SwitchMode()
@@ -124,11 +129,15 @@ public class Center : NetworkBehaviour {
         }
         else if (phase == Phase.POSTROUND)
         {
-            phase = Phase.PLAYING;
+            phase = Phase.UPGRADE;
             winner = -1;
             roundNr++;
             DeleteBullets();
             RebuildBlocks();
+        }
+        else if (phase == Phase.UPGRADE)
+        {
+            phase = Phase.PLAYING;
         }
         SetRoundTimer();
     }
@@ -141,6 +150,8 @@ public class Center : NetworkBehaviour {
         else if (phase == Phase.PREGAME) roundTime = -2;
         else if (phase == Phase.POSTGAME) roundTime = -3;
         else if (phase == Phase.POSTROUND) roundTime = postRoundTime;
+        else if (phase == Phase.UPGRADE) roundTime = upgradeTime;
+        timer = 0f;
     }
 
     private void DeleteBullets()

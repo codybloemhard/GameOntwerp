@@ -119,7 +119,7 @@ public class PlayerSetup : NetworkBehaviour {
                 shooting.enabled = false;
                 (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
             }
-            else if (currentPhase == Phase.BUILDING)
+            else if (currentPhase == Phase.BUILDING || currentPhase == Phase.UPGRADE)
             {
                 body.useGravity = false;
                 collider.enabled = false;
@@ -144,7 +144,7 @@ public class PlayerSetup : NetworkBehaviour {
         }
 
         if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME 
-            || currentPhase == Phase.POSTROUND)
+            || currentPhase == Phase.POSTROUND || currentPhase == Phase.UPGRADE)
             body.velocity = Vector3.zero;
     }
 }

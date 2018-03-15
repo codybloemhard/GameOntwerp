@@ -1,61 +1,51 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
-
+public class UpgradeInventory : MonoBehaviour {
+    
     [SerializeField]
-    private int[] amounts;
-    private int[] am;
+    private int[] costs;
     [SerializeField]
     private Sprite[] images;
     [SerializeField]
     private Image indicator;
     [SerializeField]
-    private Text amountText;
+    private Text costText;
 
     private int index;
 
-    private void Start()
-    {
-        am = new int[amounts.Length];
-        Reset();
-    }
+    private void Start () { }
 
     private void Update () {
         indicator.sprite = images[index];
-        amountText.text = "Items left: " + am[index];
+        costText.text = "Costs: " + costs[index];
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             DecreaseIndex();
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             IncreaseIndex();
         if (Input.GetMouseButtonDown(1))
-            SpawnCurrent();
+            UseCurrent();
     }
-    
+
     private void DecreaseIndex()
     {
         index--;
         if (index < 0)
-            index = amounts.Length - 1;
+            index = costs.Length - 1;
     }
 
     private void IncreaseIndex()
     {
         index++;
-        if (index > amounts.Length - 1)
+        if (index > costs.Length - 1)
             index = 0;
     }
-
-    private void SpawnCurrent()
+    
+    private void UseCurrent()
     {
-        if (am[index] <= 0) return;
-        Center.instance.toBeSpawned = index;
-        am[index]--;
-    }
-
-    public void Reset()
-    {
-        for (int i = 0; i < amounts.Length; i++)
-            am[i] = amounts[i];
+        if (costs[index] > Center.instance.money) return;
+        Center.instance.money -= costs[index];
+        if (index == 0) Center.instance.dmgMultiplier += 0.05f;
+        else Center.instance.toBeSpawned = index - 1;
     }
 }
