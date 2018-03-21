@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
+public class BuildInventory : MonoBehaviour {
 
     [SerializeField]
     private int[] amounts;
@@ -32,21 +32,21 @@ public class Inventory : MonoBehaviour {
             SpawnCurrent();
     }
     
-    public void DecreaseIndex()
+    private void DecreaseIndex()
     {
         index--;
         if (index < 0)
             index = amounts.Length - 1;
     }
 
-    public void IncreaseIndex()
+    private void IncreaseIndex()
     {
         index++;
         if (index > amounts.Length - 1)
             index = 0;
     }
 
-    public void SpawnCurrent()
+    private void SpawnCurrent()
     {
         if (am[index] <= 0) return;
         Center.instance.toBeSpawned = index;

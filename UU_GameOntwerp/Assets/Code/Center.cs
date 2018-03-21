@@ -9,6 +9,7 @@ public enum Phase
     PREGAME,
     BUILDING,
     PLAYING,
+    UPGRADE,
     POSTGAME,
     POSTROUND
 }
@@ -32,23 +33,31 @@ public class Center : NetworkBehaviour {
     private int roundNr = 0;
     //editable vars
     [SerializeField]
-    private int buildTime = 60, playTime = -1, postRoundTime = 5;
+    private int buildTime = 60, playTime = -1, postRoundTime = 5, upgradeTime = 60;
     [SerializeField]
     private Treasure targetA, targetB;
     [SyncVar]
     private string nameA = "player0", nameB = "player1";
     private int namePointer = 0;
     private string localName = "";
-    //public bool inventoryOpen = false;
     public int toBeSpawned = -1;
-    public bool needHelp = true;
     [SerializeField]
-    public Inventory inv;
-    
+    public BuildInventory inv;
+    private List<Dragable> blocks;
+    private float dmgA = 0f, dmgB = 0f;
+    public float shootPercentage;
+    public int money = 100;
+    public float dmgMultiplier = 1f;
+    [SyncVar]
+    public int buildingRound = 0;
+    public bool gameStarted = false;
+
     private void Awake () {
         if (instance != null)
             Destroy(this);
         else instance = this;
+        DontDestroyOnLoad(gameObject);
+        blocks = new List<Dragable>();
         phase = Phase.PREGAME;
         SetRoundTimer();
     }
@@ -61,9 +70,10 @@ public class Center : NetworkBehaviour {
             phase = Phase.PREGAME;
             SetRoundTimer();
         }
-        else if(phase == Phase.PREGAME)//second player connected, start game
+        else if(phase == Phase.PREGAME && !gameStarted)//second player connected, start game
         {
             phase = Phase.BUILDING;
+            gameStarted = true;
             SetRoundTimer();
         }
         
@@ -95,30 +105,48 @@ public class Center : NetworkBehaviour {
         nameB = "player1";
         namePointer = 0;
         roundNr = 0;
-        needHelp = true;
+        TutFlag.instance.needHelp = false;
         inv.Reset();
+        blocks.Clear();
+        dmgA = 0f;
+        dmgB = 0f;
+        money = 100;
+        dmgMultiplier = 1f;
+        buildingRound = 0;
+        gameStarted = false;
     }
 
     private void SwitchMode()
     {
-        if (phase == Phase.BUILDING) phase = Phase.PLAYING;
-        else if (phase == Phase.PLAYING) phase = Phase.BUILDING;
-        else if (phase == Phase.POSTROUND)
+        if (phase == Phase.BUILDING)
         {
             phase = Phase.PLAYING;
+            SaveBlocks();
+        }
+        else if (phase == Phase.PLAYING)
+        {
+            SetDamage();
+            winner = dmgA > dmgB ? 1 : 0;
+            if (winner == 0) player0Wins++;
+            else if (winner == 1) player1Wins++;
+            gameWinner = player0Wins > player1Wins ? 0 : 1;
+            if (player0Wins >= 2 || player1Wins >= 2) phase = Phase.POSTGAME;
+            else phase = Phase.POSTROUND;
+        }
+        else if (phase == Phase.POSTROUND)
+        {
+            phase = Phase.UPGRADE;
             winner = -1;
             roundNr++;
+            buildingRound++;
             DeleteBullets();
+            RebuildBlocks();
+        }
+        else if (phase == Phase.UPGRADE)
+        {
+            phase = Phase.PLAYING;
         }
         SetRoundTimer();
-    }
-    
-    private void DeleteBullets()
-    {
-        GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
-        if (allBullets == null) return;
-        for (int i = 0; i < allBullets.Length; i++)
-            Destroy(allBullets[i]);
     }
 
     private void SetRoundTimer()
@@ -129,6 +157,51 @@ public class Center : NetworkBehaviour {
         else if (phase == Phase.PREGAME) roundTime = -2;
         else if (phase == Phase.POSTGAME) roundTime = -3;
         else if (phase == Phase.POSTROUND) roundTime = postRoundTime;
+        else if (phase == Phase.UPGRADE) roundTime = upgradeTime;
+        timer = 0f;
+    }
+
+    private void DeleteBullets()
+    {
+        GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
+        if (allBullets == null) return;
+        for (int i = 0; i < allBullets.Length; i++)
+            Destroy(allBullets[i]);
+    }
+
+    private void SaveBlocks()
+    {
+        blocks.Clear();
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("BuildingBlock");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            Dragable d = objects[i].GetComponent<Dragable>();
+            d.SaveState();
+            blocks.Add(d);
+        }
+        Dragable t0 = targetA.gameObject.GetComponent<Dragable>();
+        Dragable t1 = targetB.gameObject.GetComponent<Dragable>();
+        t0.SaveState();
+        t1.SaveState();
+        blocks.Add(t0);
+        blocks.Add(t1);
+    }
+
+    private void SetDamage()
+    {
+        dmgA = 0f;
+        dmgB = 0f;
+        for (int i = 0; i < blocks.Count; i++) {
+            Vector2 res = blocks[i].GetDamage();
+            if (res.y == 0) dmgA += res.x;
+            else if (res.y == 1) dmgB += res.x;
+        }
+    }
+
+    private void RebuildBlocks()
+    {
+        for (int i = 0; i < blocks.Count; i++)
+            blocks[i].ResetState();
     }
     
     public Phase GetPhase()

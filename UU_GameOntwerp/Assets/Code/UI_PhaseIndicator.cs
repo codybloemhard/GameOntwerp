@@ -5,7 +5,7 @@ public class UI_PhaseIndicator : MonoBehaviour {
 
     private Image image;
     [SerializeField]
-    private Sprite buildImg, fightImg, preImg, postImg;
+    private Sprite buildImg, fightImg, preImg, postImg, upgradeImg;
 
     private void Start () {
         image = GetComponent<Image>();
@@ -29,5 +29,7 @@ public class UI_PhaseIndicator : MonoBehaviour {
             image.sprite = postImg;
         else if (Center.instance.GetPhase() == Phase.POSTROUND)
             image.sprite = postImg;
+        else if (Center.instance.GetPhase() == Phase.UPGRADE)
+            image.sprite = upgradeImg;
     }
 }

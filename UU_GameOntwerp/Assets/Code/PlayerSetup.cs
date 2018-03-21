@@ -48,9 +48,12 @@ public class PlayerSetup : NetworkBehaviour {
         int nr = Center.instance.GetNewPlayer(treasure);
         if (isClient)
             RpcSetplayerNrOnLocal(nr);
-        else if(isLocalPlayer)
+        else if (isLocalPlayer)
+        {
             GetComponent<Shooting>().SetNr(nr);
-        if (nr > 1) isSpectator = true;
+            GetComponent<BlockSpawner>().SetNr(nr);
+        }
+        if (nr > 1 || Center.instance.gameStarted) isSpectator = true;
         else isSpectator = false;
         RpcSetSpectator(isSpectator);//dont need to check for isClient: host is first player and never spectator!
     }
@@ -67,6 +70,7 @@ public class PlayerSetup : NetworkBehaviour {
     {
         if (!isLocalPlayer) return;
         GetComponent<Shooting>().SetNr(nr);
+        GetComponent<BlockSpawner>().SetNr(nr);
     }
     
     [Command]
@@ -115,7 +119,7 @@ public class PlayerSetup : NetworkBehaviour {
                 shooting.enabled = false;
                 (flyControls as FlyMovement).mouseLook.Init(transform, fpsCam.transform);
             }
-            else if (currentPhase == Phase.BUILDING)
+            else if (currentPhase == Phase.BUILDING || currentPhase == Phase.UPGRADE)
             {
                 body.useGravity = false;
                 collider.enabled = false;
@@ -140,7 +144,7 @@ public class PlayerSetup : NetworkBehaviour {
         }
 
         if(isSpectator || currentPhase == Phase.BUILDING || currentPhase == Phase.PREGAME || currentPhase == Phase.POSTGAME 
-            || currentPhase == Phase.POSTROUND)
+            || currentPhase == Phase.POSTROUND || currentPhase == Phase.UPGRADE)
             body.velocity = Vector3.zero;
     }
 }
