@@ -25,11 +25,12 @@ public class BlockSpawner : NetworkBehaviour
             Physics.Raycast(closestSpawnPoint.transform.position, cam.transform.forward, out hit);
             if (hit.collider != null)
             {
-                if (hit.distance < grapDistance && hit.collider.tag == "BuildingBlock"
-                    || hit.collider.tag == "TargetA" || hit.collider.tag == "TargetB")
-                {
+                int lastCharVal = hit.collider.name[hit.collider.name.Length - 1] - 48;
+                int round = Center.instance.buildingRound;
+                bool ok = round == lastCharVal;
+                if (hit.distance < grapDistance && (hit.collider.tag == "BuildingBlock"
+                    || hit.collider.tag == "TargetA" || hit.collider.tag == "TargetB") && ok)
                     caught = hit.collider.gameObject;
-                }
             }
         }
         else if(caught != null && !Input.GetMouseButton(0))
@@ -61,7 +62,9 @@ public class BlockSpawner : NetworkBehaviour
         Vector3 spawnPos = closestSpawnPoint.transform.position;
         GameObject spawned = (GameObject)Instantiate(blocks[o], spawnPos, Quaternion.identity);
         spawned.GetComponent<Dragable>().SetPlayer(nr);
-        spawned.name = "block" + nr;
+        string name = "block" + nr + "-" + Center.instance.buildingRound;
+        spawned.name = name;
+        spawned.GetComponent<Dragable>().SetName(name);
         NetworkServer.Spawn(spawned);
     }
     [Command]

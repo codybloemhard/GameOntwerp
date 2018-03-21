@@ -53,7 +53,7 @@ public class PlayerSetup : NetworkBehaviour {
             GetComponent<Shooting>().SetNr(nr);
             GetComponent<BlockSpawner>().SetNr(nr);
         }
-        if (nr > 1) isSpectator = true;
+        if (nr > 1 || Center.instance.gameStarted) isSpectator = true;
         else isSpectator = false;
         RpcSetSpectator(isSpectator);//dont need to check for isClient: host is first player and never spectator!
     }

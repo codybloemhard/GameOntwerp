@@ -41,7 +41,6 @@ public class Center : NetworkBehaviour {
     private int namePointer = 0;
     private string localName = "";
     public int toBeSpawned = -1;
-    public bool needHelp = true;
     [SerializeField]
     public BuildInventory inv;
     private List<Dragable> blocks;
@@ -49,11 +48,15 @@ public class Center : NetworkBehaviour {
     public float shootPercentage;
     public int money = 100;
     public float dmgMultiplier = 1f;
+    [SyncVar]
+    public int buildingRound = 0;
+    public bool gameStarted = false;
 
     private void Awake () {
         if (instance != null)
             Destroy(this);
         else instance = this;
+        DontDestroyOnLoad(gameObject);
         blocks = new List<Dragable>();
         phase = Phase.PREGAME;
         SetRoundTimer();
@@ -67,9 +70,10 @@ public class Center : NetworkBehaviour {
             phase = Phase.PREGAME;
             SetRoundTimer();
         }
-        else if(phase == Phase.PREGAME)//second player connected, start game
+        else if(phase == Phase.PREGAME && !gameStarted)//second player connected, start game
         {
             phase = Phase.BUILDING;
+            gameStarted = true;
             SetRoundTimer();
         }
         
@@ -101,13 +105,15 @@ public class Center : NetworkBehaviour {
         nameB = "player1";
         namePointer = 0;
         roundNr = 0;
-        needHelp = true;
+        TutFlag.instance.needHelp = false;
         inv.Reset();
         blocks.Clear();
         dmgA = 0f;
         dmgB = 0f;
         money = 100;
         dmgMultiplier = 1f;
+        buildingRound = 0;
+        gameStarted = false;
     }
 
     private void SwitchMode()
@@ -132,6 +138,7 @@ public class Center : NetworkBehaviour {
             phase = Phase.UPGRADE;
             winner = -1;
             roundNr++;
+            buildingRound++;
             DeleteBullets();
             RebuildBlocks();
         }

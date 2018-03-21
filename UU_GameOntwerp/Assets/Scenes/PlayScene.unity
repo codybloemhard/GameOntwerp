@@ -1650,6 +1650,7 @@ MonoBehaviour:
   shootPercentage: 0
   money: 100
   dmgMultiplier: 1
+  buildingRound: 0
 --- !u!114 &737483034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3032,7 +3033,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1721108255371586, guid: 12bfadd89cd09474689e2e5abf0027bd, type: 2}
       propertyPath: m_Name
-      value: TreasureB
+      value: TreasureB0
       objectReference: {fileID: 0}
     - target: {fileID: 1721108255371586, guid: 12bfadd89cd09474689e2e5abf0027bd, type: 2}
       propertyPath: m_TagString
@@ -4050,7 +4051,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1721108255371586, guid: 12bfadd89cd09474689e2e5abf0027bd, type: 2}
       propertyPath: m_Name
-      value: TreasureA
+      value: TreasureA0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 12bfadd89cd09474689e2e5abf0027bd, type: 2}

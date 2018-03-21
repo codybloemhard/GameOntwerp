@@ -9,6 +9,8 @@ public class Dragable : NetworkBehaviour
     private Vector3 pos;
     [SyncVar]
     private float dragged;
+    [SyncVar]
+    private string name;
     private Rigidbody body;
     private Vector3 _pos;
     private Quaternion _rot;
@@ -18,7 +20,7 @@ public class Dragable : NetworkBehaviour
     {
         body = GetComponent<Rigidbody>();
     }
-
+    
     public void Update()
     {
         dragged -= 0.2f;
@@ -29,6 +31,8 @@ public class Dragable : NetworkBehaviour
         }
         else
             body.useGravity = true;
+        if (gameObject.name != name && gameObject.name[0] != 'T')
+            gameObject.name = name;
     }
 
 	public void Set(Vector3 pos)
@@ -54,6 +58,11 @@ public class Dragable : NetworkBehaviour
     public void SetPlayer(int nr)
     {
         fromPlayer = nr;
+    }
+
+    public void SetName(string name)
+    {
+        this.name = name;
     }
 
     public Vector2 GetDamage()
