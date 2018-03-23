@@ -9,10 +9,11 @@ public class UI_Helper : MonoBehaviour {
     private Text text;
     private float timer;
     private int collection, msg, index, prevCollection;
-    private int[][] collections = new int[][] { new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 5, 6, 7 }, new int[] { 0, 1, 3, 8} };
+    private int[][] collections = new int[][] { new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 5, 6, 7 }, new int[] { 0, 1, 3, 8, 9} };
     private string[] msgs = new string[] { "Move with WASD", "Fly with Q/E", "Hold left mouse button to drag object around",
     "Use the ScrollWheel to select items in your inventory", "Use right mouse button to spawn a item", "Shoot with left mouse",
-    "Try to hit the enemy's treasure", "Press SPACE to jump", "Use right mouse to buy an item if you have money enough" };
+    "Try to hit the enemy's treasure", "Press SPACE to jump", "Use right mouse to buy an item if you have money enough",
+        "You can strengthen your building or upgrade fire power" };
     
     public void Awake()
     {

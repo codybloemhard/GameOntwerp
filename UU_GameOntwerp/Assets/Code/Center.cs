@@ -51,7 +51,7 @@ public class Center : NetworkBehaviour {
     [SyncVar]
     public int buildingRound = 0;
     public bool gameStarted = false;
-
+    
     private void Awake () {
         if (instance != null)
             Destroy(this);

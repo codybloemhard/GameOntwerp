@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54703052968666336}
   - component: {fileID: 114358048988571342}
   - component: {fileID: 114562208712012028}
+  - component: {fileID: 114142197450931512}
   m_Layer: 11
   m_Name: Kogel
   m_TagString: Bullet
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1593289008687858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.688, y: 0.5000019, z: 15.615799}
+  m_LocalPosition: {x: 56.61411, y: -0.142, z: 9.796186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,7 +60,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 35e8322f7670c49438d5950fc15e6773, type: 2}
+  - {fileID: 2100000, guid: bb3264d7f93b7784b97bcd6b0e152b94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,6 +102,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114142197450931512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593289008687858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f92fd6331b08347a18e19f621ef400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 5
 --- !u!114 &114358048988571342
 MonoBehaviour:
   m_ObjectHideFlags: 1
